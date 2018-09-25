@@ -30,5 +30,7 @@ Now go to [http://localhost:8000/](http://localhost:8000/) and start looking at 
 
 ## More Links
 
-docs: http://elm-lang.org/docs
-coredoc: https://package.elm-lang.org/packages/elm-lang/core/5.1.1/
+ * docs:
+    * http://elm-lang.org/docs
+ * coredoc:
+    * https://package.elm-lang.org/packages/elm-lang/core/5.1.1/
