@@ -58,10 +58,16 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-    [ viewInput "text" "Name" model.name Name
-    , viewInput "password" "Password" model.password Password
-    , viewInput "password" "Re-enter Password" model.passwordAgain PasswordAgain
-    , viewValidation model
+    [ div [] [
+           text "Name: "
+           , viewInput "text" "Name" model.name Name ]
+    , div [] [
+           text "Password: "
+           , viewInput "password" "Password" model.password Password ]
+    , div [] [
+           text "Password confirmation: "
+           , viewInput "password" "Re-enter Password" model.passwordAgain PasswordAgain ]
+    , div [] [ viewValidation model ]
     ]
 
 
@@ -69,10 +75,16 @@ viewInput : String -> String -> String -> (String -> msg) -> Html msg
 viewInput t p v toMsg =
   input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
+isUpperChar c = String.contains c "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+isUpper str = map isUpperChar (String.toList str)
 
 viewValidation : Model -> Html msg
 viewValidation model =
-  if model.password == model.passwordAgain then
-    div [ style "color" "green" ] [ text "OK" ]
+  if String.length model.password < 8 then
+    button [ style "background-color" "pink" ] [ text "Password too short" ]
+  else if 
+  else if model.password /= model.passwordAgain then
+    button [ style "background-color" "pink" ] [ text "Passwords do not match!" ]
   else
-    div [ style "color" "red" ] [ text "Passwords do not match!" ]
+    button [ style "background-color" "lightgreen" ] [ text "OK" ]
