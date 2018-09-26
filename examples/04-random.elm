@@ -23,13 +23,14 @@ main =
 
 
 type alias Model =
-  { dieFace : Int
+  { history : List Int
+    , dieFace : Int
   }
 
 
 init : () -> (Model, Cmd Msg)
 init _ =
-  ( Model 1
+  ( Model [] 3
   , Cmd.none
   )
 
@@ -47,7 +48,9 @@ update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     Roll ->
-      ( model
+      ( { model | history = model.history ++ [ model.dieFace ] }
+      , Random.generate NewFace (Random.int 1 6)
+      )
       , Random.generate NewFace (Random.int 1 6)
       )
 
@@ -65,6 +68,14 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
   Sub.none
 
+history : Model -> String
+history model =
+    case model.history of
+        [] ->
+            "history: []"
+
+        first :: rest ->
+            "history: [ " ++ (String.join "," (List.map String.fromInt model.history)) ++ " ]"
 
 
 -- VIEW
@@ -75,4 +86,5 @@ view model =
   div []
     [ h1 [] [ text (String.fromInt model.dieFace) ]
     , button [ onClick Roll ] [ text "Roll" ]
-    ]
+    ]      , p [] [ text (history model) ]
+      , p [] [ text (history model) ]
