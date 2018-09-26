@@ -41,6 +41,7 @@ init _ =
 
 type Msg
   = Roll
+  | Reset
   | NewFace Int
 
 
@@ -51,11 +52,14 @@ update msg model =
       ( { model | history = model.history ++ [ model.dieFace ] }
       , Random.generate NewFace (Random.int 1 6)
       )
+
+    Reset ->
+      ( { model | history = [] }
       , Random.generate NewFace (Random.int 1 6)
       )
 
     NewFace newFace ->
-      ( Model newFace
+      ( { model | dieFace = newFace }
       , Cmd.none
       )
 
@@ -80,11 +84,25 @@ history model =
 
 -- VIEW
 
+-- dieFace1 =
+--    svg [ svg.width "60" , svg.height "60" , Cmd.none ]
 
 view : Model -> Html Msg
 view model =
   div []
-    [ h1 [] [ text (String.fromInt model.dieFace) ]
-    , button [ onClick Roll ] [ text "Roll" ]
-    ]      , p [] [ text (history model) ]
+      [ -- text (String.join "," (List.map String.fromInt model.history))
+      h1 [] [ text (String.fromInt model.dieFace) ]
+      , table [ style "width" "500px"
+              , style "border" "solid"
+              , style "margin" "auto"
+              , style "justify" "center"
+              ]
+              [ tr [style "margin" "auto"]
+                   [ td [style "margin" "auto"]
+                        [button [ onClick Roll] [ text "Roll" ]]
+                   , td [style "margin" "auto"]
+                        [button [ onClick Reset ] [ text "Reset" ]]
+                   ]
+              ]
       , p [] [ text (history model) ]
+      ]
