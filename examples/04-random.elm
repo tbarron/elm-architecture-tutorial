@@ -91,18 +91,22 @@ view : Model -> Html Msg
 view model =
   div []
       [ -- text (String.join "," (List.map String.fromInt model.history))
-      h1 [] [ text (String.fromInt model.dieFace) ]
-      , table [ style "width" "500px"
-              , style "border" "solid"
-              , style "margin" "auto"
-              , style "justify" "center"
+            -- h1 [] [ text (String.fromInt model.dieFace) ]
+      table [ style "width" "500px"
+              -- , style "border" "solid"
+              -- , style "margin" "auto"
+              -- , style "justify" "center"
               ]
-              [ tr [style "margin" "auto"]
-                   [ td [style "margin" "auto"]
+              [ tr []
+                   [ td [] [h1 [] [ text (String.fromInt model.dieFace) ]]]
+              , tr []
+                   [ td []
                         [button [ onClick Roll] [ text "Roll" ]]
-                   , td [style "margin" "auto"]
+                   , td []
                         [button [ onClick Reset ] [ text "Reset" ]]
                    ]
+              , tr []
+                   [ td [] [text (history model)]
+                   ]
               ]
-      , p [] [ text (history model) ]
       ]
