@@ -5,6 +5,14 @@ import Html.Attributes exposing (..)
 import Random
 import Svg exposing (svg)
 
+-- Goals
+-- [] create a weighted die with Random.weighted
+-- [] use Random.pair to roll two dice at once
+-- [] instead of 1 to 6, display graphical reps ('.', '..', '...', '.|', '|', '|.')
+-- [] get some canned images and display them instead of strings
+-- [] figure out svg and use it to generate die face images
+-- [] make the dice flip around randomly before settling on a final value
+
 
 -- MAIN
 
