@@ -1,9 +1,10 @@
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (onInput, onClick)
 
-
+-- Goals
+-- [] Lay out the HTML components in a table or using grid or flex
 
 -- MAIN
 
@@ -51,7 +52,6 @@ update msg model =
       { model | passwordAgain = password }
 
 
-
 -- VIEW
 
 
@@ -75,16 +75,28 @@ viewInput : String -> String -> String -> (String -> msg) -> Html msg
 viewInput t p v toMsg =
   input [ type_ t, placeholder p, value v, onInput toMsg ] []
 
-isUpperChar c = String.contains c "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+hasUpper : String -> Bool
+hasUpper str = String.any Char.isUpper str
 
-isUpper str = map isUpperChar (String.toList str)
+hasLower : String -> Bool
+hasLower str = String.any Char.isLower str
+
+hasNumber : String -> Bool
+hasNumber str = String.any Char.isDigit str
 
 viewValidation : Model -> Html msg
 viewValidation model =
-  if String.length model.password < 8 then
-    button [ style "background-color" "pink" ] [ text "Password too short" ]
-  else if 
-  else if model.password /= model.passwordAgain then
+  if model.password /= model.passwordAgain then
     button [ style "background-color" "pink" ] [ text "Passwords do not match!" ]
+  else if String.length model.password < 8 then
+    button [ style "background-color" "pink" ] [ text "Password too short" ]
+  else if not (hasUpper model.password) then
+    button [ style "background-color" "pink" ] [ text "Password must contain uppercase" ]
+  else if not (hasLower model.password) then
+    button [ style "background-color" "pink" ] [ text "Password must contain lowercase" ]
+  else if not (hasNumber model.password) then
+    button [ style "background-color" "pink" ] [ text "Password must contain number" ]
+  else if String.length model.name < 3 then
+    button [ style "background-color" "pink" ] [ text "Name length must be at least 3" ]
   else
     button [ style "background-color" "lightgreen" ] [ text "OK" ]
