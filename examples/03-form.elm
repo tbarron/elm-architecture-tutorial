@@ -58,17 +58,21 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-    [ div [] [
-           text "Name: "
-           , viewInput "text" "Name" model.name Name ]
-    , div [] [
-           text "Password: "
-           , viewInput "password" "Password" model.password Password ]
-    , div [] [
-           text "Password confirmation: "
-           , viewInput "password" "Re-enter Password" model.passwordAgain PasswordAgain ]
-    , div [] [ viewValidation model ]
-    ]
+      [
+      table []
+            [ tr [] [ td [] [text "Name: "]
+                    , td [] [viewInput "text" "Name" model.name Name]
+                    ]
+            , tr [] [ td [] [text "Password: "]
+                    , td [] [viewInput "password" "Password" model.password Password]
+                    ]
+            , tr [] [td [] [text "Password confirmation: "]
+                    , td [] [viewInput "password" "Re-enter Password"
+                                 model.passwordAgain PasswordAgain]
+                    ]
+            ]
+      , div [] [ viewValidation model ]
+      ]
 
 
 viewInput : String -> String -> String -> (String -> msg) -> Html msg
