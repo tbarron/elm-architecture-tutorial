@@ -30,6 +30,8 @@ Now go to [http://localhost:8000/](http://localhost:8000/) and start looking at 
 
 ## More Links
 
+ * Tutorial
+    * https://guide.elm-lang.org/
  * docs:
     * http://elm-lang.org/docs
  * coredoc:
